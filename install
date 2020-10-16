@@ -12,11 +12,10 @@ path_root=${path_root:-""}
 [ -f "${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf" ] || dd of="${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf" <<EOF
 [Service]
     ExecStart=
-    ExecStart=-/bin/su pi -c "${path_root}/home/${1}/.tty1.service.d"
+    ExecStart=-/bin/su "${1}" -c "${path_root}/home/${1}/.tty1.service.d"
     StandardInput=tty
     StandardOutput=tty
 EOF
-chmod +x "${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf"
 
 
 # Install ~/.tty1.service.d only if there is not one
@@ -33,10 +32,8 @@ chmod +x "${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf"
 	setterm --blank 0
 
     tmux new-session -s $session -d htop
-	# busybox-syslogd
 	tmux split-window -t $session tail --follow /var/log/messages
-	# tail --follow --lines=0 ~/.forever/*.log
-        tmux resize-pane -t $session:0 -D 4
+    tmux resize-pane -t $session:0 -D 4
 
 	tmux set -t $session -g status off
 	tmux set -t $session -g pane-border-status off
