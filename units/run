@@ -1,0 +1,13 @@
+#/bin/bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+export path_root=$(mktemp --directory)
+
+if [ -f ${SCRIPTPATH}/../install ]; then
+    mkdir -p ${path_root}/home/pi
+
+    "${SCRIPTPATH}/../install" pi
+
+    find "${path_root}"
+    rm -r "${path_root}"
+fi

@@ -1,0 +1,46 @@
+#/bin/bash
+
+path_root=${path_root:-""}
+
+# Install required apps
+[ -x "`command -v tmux`" ] || apt-get install tmux
+[ -x "`command -v htop`" ] || apt-get install htop
+
+[ -d "${path_root}/etc/systemd/system/getty@tty1.service.d/" ] || mkdir -p "${path_root}/etc/systemd/system/getty@tty1.service.d/"
+
+# Install TTY1 override only if there is not one
+[ -f "${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf" ] || dd of="${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf" <<EOF
+[Service]
+    ExecStart=
+    ExecStart=-/bin/su pi -c "${path_root}/home/${1}/.tty1.service.d"
+    StandardInput=tty
+    StandardOutput=tty
+EOF
+
+
+# Install ~/.tty1.service.d only if there is not one
+# Allow user to have their own script
+[ -f "${path_root}/home/${1}/.tty1.service.d" ] || dd of="${path_root}/home/${1}/.tty1.service.d" <<EOF
+	#!/bin/sh
+	# Session Name
+	session="tt1server"
+	cat /sys/module/kernel/parameters/consoleblank
+	
+	tmux kill-server
+    tmux start-server
+
+	setterm --blank 0
+
+    tmux new-session -s $session -d htop
+	# busybox-syslogd
+	tmux split-window -t $session tail --follow /var/log/messages
+	# tail --follow --lines=0 ~/.forever/*.log
+        tmux resize-pane -t $session:0 -D 4
+
+	tmux set -t $session -g status off
+	tmux set -t $session -g pane-border-status off
+
+   tmux attach-session -t $session
+EOF
+
+chmod +x "${path_root}/home/${1}/.tty1.service.d"
