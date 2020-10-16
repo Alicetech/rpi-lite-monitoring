@@ -21,24 +21,24 @@ EOF
 # Install ~/.tty1.service.d only if there is not one
 # Allow user to have their own script
 [ -f "${path_root}/home/${1}/.tty1.service.d" ] || dd of="${path_root}/home/${1}/.tty1.service.d" <<EOF
-	#!/bin/sh
-	# Session Name
-	session="tt1server"
-	cat /sys/module/kernel/parameters/consoleblank
-	
-	tmux kill-server
-    tmux start-server
+#!/bin/sh
+# Session Name
+session="tt1server"
+cat /sys/module/kernel/parameters/consoleblank
 
-	setterm --blank 0
+tmux kill-server
+tmux start-server
 
-    tmux new-session -s \$session -d htop
-	tmux split-window -t \$session tail --follow /var/log/messages
-    tmux resize-pane -t \$session:0 -D 4
+setterm --blank 0
 
-	tmux set -t \$session -g status off
-	tmux set -t \$session -g pane-border-status off
+tmux new-session -s \$session -d htop
+tmux split-window -t \$session tail --follow /var/log/messages
+tmux resize-pane -t \$session:0 -D 4
 
-   tmux attach-session -t \$session
+tmux set -t \$session -g status off
+tmux set -t \$session -g pane-border-status off
+
+tmux attach-session -t \$session
 EOF
 
 chmod +x "${path_root}/home/${1}/.tty1.service.d"
