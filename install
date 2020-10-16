@@ -31,14 +31,14 @@ EOF
 
 	setterm --blank 0
 
-    tmux new-session -s $session -d htop
-	tmux split-window -t $session tail --follow /var/log/messages
-    tmux resize-pane -t $session:0 -D 4
+    tmux new-session -s \$session -d htop
+	tmux split-window -t \$session tail --follow /var/log/messages
+    tmux resize-pane -t \$session:0 -D 4
 
-	tmux set -t $session -g status off
-	tmux set -t $session -g pane-border-status off
+	tmux set -t \$session -g status off
+	tmux set -t \$session -g pane-border-status off
 
-   tmux attach-session -t $session
+   tmux attach-session -t \$session
 EOF
 
 chmod +x "${path_root}/home/${1}/.tty1.service.d"

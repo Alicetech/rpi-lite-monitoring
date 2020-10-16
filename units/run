@@ -8,6 +8,8 @@ if [ -f ${SCRIPTPATH}/../install ]; then
 
     "${SCRIPTPATH}/../install" pi
 
+    cat "${path_root}/home/pi/.tty1.service.d"
+
     find "${path_root}"
     rm -r "${path_root}"
 fi
