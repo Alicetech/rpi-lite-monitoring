@@ -16,6 +16,7 @@ path_root=${path_root:-""}
     StandardInput=tty
     StandardOutput=tty
 EOF
+chmod +x "${path_root}/etc/systemd/system/getty@tty1.service.d/override.conf"
 
 
 # Install ~/.tty1.service.d only if there is not one
