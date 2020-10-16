@@ -3,8 +3,8 @@
 path_root=${path_root:-""}
 
 # Install required apps
-[ -x "`command -v tmux`" ] || apt-get install tmux
-[ -x "`command -v htop`" ] || apt-get install htop
+[ -x "`command -v tmux`" ] || apt-get install -y tmux
+[ -x "`command -v htop`" ] || apt-get install -y htop
 
 [ -d "${path_root}/etc/systemd/system/getty@tty1.service.d/" ] || mkdir -p "${path_root}/etc/systemd/system/getty@tty1.service.d/"
 
