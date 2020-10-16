@@ -11,3 +11,11 @@ sudo reboot
 ```
 
 ctrl+alt+f3 will take you to tty3 so you can still login
+
+# How to run tests before bug report
+```
+git clone https://github.com/Alicetech/rpi-lcd-show-improved.git
+cd rpi-lcd-show-improved
+chmod ./units/run
+./units/run
+```
