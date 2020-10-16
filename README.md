@@ -11,3 +11,11 @@ sudo reboot
 ```
 
 ctrl+alt+f3 will take you to tty3 so you can still login
+
+# How to run tests before bug report
+```
+git clone https://github.com/Alicetech/rpi-lite-monitoring.git
+cd rpi-lite-monitoring
+chmod ./units/run
+./units/run
+```
