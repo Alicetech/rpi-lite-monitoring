@@ -43,3 +43,5 @@ EOF
 
 chmod +x "${path_root}/home/${1}/.tty1.service.d"
 chown "${1}:${1}" "${path_root}/home/${1}/.tty1.service.d"
+
+systemctl restart getty@tty1
