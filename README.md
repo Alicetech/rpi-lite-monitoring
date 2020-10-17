@@ -2,15 +2,17 @@
 Changes login prompt (tty1)  into system monitoring.
 
 # How to install
+
+ctrl+alt+f3 will take you to tty3 so you can still login
+
+This will restart tty1. tty3 should be used to run this command
 ```
 curl -o- https://raw.githubusercontent.com/Alicetech/rpi-lite-monitoring/main/install | sudo bash /dev/stdin pi
 ```
-After that you need to reboot
-```
-sudo reboot
-```
+ctrl+alt+f1 will take you to tty1 so you see what the screen looks like now and on reboots.
 
-ctrl+alt+f3 will take you to tty3 so you can still login
+# How to edit screen
+Edit the file /home/pi/.tty1.service.d to change the commands and tmux
 
 # How to run tests before bug report
 ```
